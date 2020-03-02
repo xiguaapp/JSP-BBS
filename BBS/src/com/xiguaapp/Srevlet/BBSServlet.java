@@ -79,13 +79,19 @@ public class BBSServlet extends HttpServlet {
 			String pwd=request.getParameter("mima");
 			System.out.println(pwd);
 			List<BBSUsers> list=bs.hasOne(new BBSUsers(name,pwd));
-			request.getSession().setAttribute("ruid", list.get(0).getUid());
+		
 			if(list.size()>0) {
+				request.getSession().setAttribute("ruid", list.get(0).getUid());
 				request.getSession().setAttribute("name", name);
 				request.getSession().setAttribute("id", list.get(0).getUid());
 				out.print("<script>");
 				out.print("alert('登录成功');");
 				out.print("location.href='BBSServlet?method=TopicList';");
+				out.print("</script>");
+			}else {
+				out.print("<script>");
+				out.print("alert('密码错误');");
+				out.print("location.href='Login.jsp';");
 				out.print("</script>");
 			}
 			
